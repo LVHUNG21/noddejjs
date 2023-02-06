@@ -25,11 +25,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   final AuthService authService = AuthService();
-
+  final _messangerKey = GlobalKey<ScaffoldMessengerState>();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Amazon Clone',
+      scaffoldMessengerKey: _messangerKey,
       theme: ThemeData(
           scaffoldBackgroundColor: GlobalVariables.backgroundColor,
           colorScheme:
@@ -50,6 +51,17 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     authService.getUserData(context);
+  }
+}
+
+class SnackbarGlobal {
+  static GlobalKey<ScaffoldMessengerState> key =
+      GlobalKey<ScaffoldMessengerState>();
+
+  static void show(String message) {
+    key.currentState!
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(message)));
   }
 }
 
